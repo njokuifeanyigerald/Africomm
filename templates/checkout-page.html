@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load cart_template_tags %}
+
+{% block content %}
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4 text-capitalize">
+    <div class="container wow fadeIn">
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form class="card-body" method="POST" action=".">
+              {% csrf_token %}
+              <h3>shipping address</h3>
+              <hr>
+              <div>
+                <div class="hideable-shipping-form">
+                  <div class="md-form mb-5">
+                    {{form.shippingAddress}}
+                    <label for="address" class="">Address</label>
+                    
+                  </div>
+                  <div class="md-form mb-5">
+                    {{form.shippingAddress2}}
+                    <label for="address-2" class="">Address 2 (optional)</label>
+                  </div>
+                  <div class="row">
+  
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-6 mb-4">
+                      
+                       <label for="country">Country</label>
+                       {{form.shippingCountry}}
+                      <div class="invalid-feedback">
+                        Please select a valid country.
+                      </div>
+    
+                    </div> 
+                    <div class="col-lg-6 col-md-6 mb-4">
+                      <label for="zip">shipping Zip</label>
+                      {{form.shippingZip}}
+    
+                    </div>
+                  </div>
+                  <div class="custom-control custom-checkbox ">
+                    {{form.set_default_shipping}}
+                    <label class="custom-control-label" for="set_default_shipping">save as default shipping address</label>
+                  </div>
+                </div>
+                <div class="custom-control custom-checkbox same_billing_address">
+                  {{form.same_billing_address}}
+                  <label class="custom-control-label" for="same_billing_address">Shipping address is the same as my billing address</label>
+                </div>
+                {% if use_default_shipping %}
+                <div class="custom-control custom-checkbox use_default_shipping" >
+                  {{form.use_default_shipping}}
+                  <label class="custom-control-label" for="use_default_shipping">use default shipping address:{{use_default_shipping.street_address|truncatechars:10}}</label>
+                </div>
+                {% endif %}
+              </div>
+               
+              <hr class="my-4">   
+              <h3>billing address</h3>
+              <hr>
+              <div>
+                <div class="hideable-billing-form">
+                  <div class="md-form mb-5">
+                    {{form.billingAddress}}
+                    <label for="address" class="">Address</label>
+                    
+                  </div>
+                  <div class="md-form mb-5">
+                    {{form.billingAddress2}}
+                    <label for="address-2" class="">Address 2 (optional)</label>
+                  </div>
+                  <div class="row">
+  
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-6 mb-4">
+                      
+                       <label for="country">Country</label>
+                       {{form.billingCountry}}
+                      <div class="invalid-feedback">
+                        Please select a valid country.
+                      </div>
+    
+                    </div> 
+                    <div class="col-lg-6 col-md-6 mb-4" >
+                      <label for="zip">Billing Zip</label>
+                      {{form.billingZip}}
+                    </div>
+                  </div>
+                  <div class="custom-control custom-checkbox" >
+                    {{form.set_default_billing}}
+                    <label class="custom-control-label" for="set_default_billing">save as default billing address</label>
+                  </div>
+                </div>  
+                {% if use_default_billing %}
+                  <div class="custom-control custom-checkbox use_default_billing">
+                    {{form.use_default_billing}}
+                    <label class="custom-control-label" for="use_default_billing">default billing address:{{use_default_billing.street_address|truncatechars:13}}</label>
+                  </div>
+                {% endif %}
+              </div>
+               
+              <hr>
+
+              
+
+              <hr>
+              <h3>payment option</h3>
+              <hr>
+              <div class="d-block my-3">
+                <div class="custom-control custom-radio ">
+                 {{form.paymentOption}}
+                </div> 
+              </div>
+              <hr class="mb-4">
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        
+        
+      <div class="col-md-4 mb-4">
+        {% include 'order_snippet.html' %} 
+      </div>
+
+    </div>
+  </main>
+  {% block extraScript %}
+  
+  <script>
+    var hideable_shipping_form = $('.hideable-shipping-form');
+    var hideable_billing_form = $('.hideable-billing-form');
+
+    var same_billing_address =  $('.same_billing_address');
+    var use_default_shipping =  $('.use_default_shipping');
+    var use_default_billing = $('.use_default_billing');
+    $(use_default_shipping).click(function(){
+      $(hideable_shipping_form).toggle();
+    });
+    $(use_default_shipping).click(function(){
+      $(same_billing_address).toggle();
+    });
+   
+    $(use_default_billing).click(function(){
+      $(hideable_billing_form).toggle();
+    });
+    $(same_billing_address).click(function(){
+      $(hideable_billing_form ).toggle();
+    });
+    $(same_billing_address).click(function(){
+      $(use_default_billing ).toggle();
+    });
+
+  </script>
+
+  {% endblock %}
+{% endblock %}
+
+ 

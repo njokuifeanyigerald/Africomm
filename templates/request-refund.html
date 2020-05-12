@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+{% endblock extra_head %}
+
+{% block content %}
+
+  <main class="text-center text-capitalize" >
+    <div class="container wow fadeIn">
+        <h2>Request Refund </h2>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-primary" type="submit">submit</button>
+        </form>
+    </div>
+  </main>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+
+
+
+{% endblock extra_scripts %}
+
+
+ 
