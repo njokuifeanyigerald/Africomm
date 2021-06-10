@@ -15,7 +15,7 @@ daphne==2.4.1
 defusedxml==0.6.0
 dj-rest-auth==1.0.1
 dj-stripe==2.3.0
-Django==3.0.4
+Django==3.1.12
 django-admin-honeypot==1.1.0
 django-allauth==0.41.0
 django-cities==0.6
